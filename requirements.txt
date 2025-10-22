@@ -1,7 +1,7 @@
-flask
-yfinance 
-pandas_ta 
-pandas 
-numpy 
-matplotlib 
+Flask
+yfinance
+pandas
+pandas-ta
+numpy
 mplfinance
+gunicorn
