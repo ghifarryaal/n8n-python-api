@@ -1,0 +1,7 @@
+flask
+yfinance 
+pandas_ta 
+pandas 
+numpy 
+matplotlib 
+mplfinance
