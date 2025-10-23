@@ -147,7 +147,15 @@ def get_fundamental_analysis(ticker_symbol):
         # --- 2. Price-to-Book Value (PBV) ---
         analysis_log.append(f"\n## 2. Price-to-Book Value (PBV)")
         if pbv is not None:
+            # Hitung BVPS (Book Value Per Share) dari PBV dan harga
+            bvps = harga / pbv if pbv > 0 else None
+            
             analysis_log.append(f"   -> PBV Emiten: {pbv:.2f}x")
+            if bvps:
+                analysis_log.append(f"   -> Book Value Per Share (BVPS): Rp {bvps:,.0f}")
+                analysis_log.append(f"   -> Rumus PBV: Harga Saham / BVPS = Rp {harga:,.0f} / Rp {bvps:,.0f} = {pbv:.2f}x")
+                structured_data["emiten"]["BVPS"] = bvps
+            
             if avg_pbv:
                 if pbv < avg_pbv:
                     analysis_log.append(f"   -> Komparasi: DI BAWAH rata-rata sektor ({avg_pbv:.2f}x). 👍 (Potensi Murah)")
