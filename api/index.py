@@ -68,6 +68,33 @@ def handle_teknikal():
     except Exception as e:
         return jsonify({"status": "error", "message": f"Internal server error: {e}"}), 500
 
+# === ENDPOINT 3: SENTIMEN ===
+from analisis_sentimen import get_sentiment_analysis
+
+@app.route('/api/sentimen', methods=['POST'])
+def handle_sentimen():
+    try:
+        req_data = request.get_json()
+        if not req_data or 'ticker' not in req_data:
+            return jsonify({"status": "error", "message": "Mohon kirim {'ticker': 'KODE_SAHAM'}"}), 400
+
+        ticker_input = req_data['ticker'].upper()
+        ticker_symbol_jk = ticker_input + ".JK"
+
+        log, data, success = get_sentiment_analysis(ticker_symbol_jk)
+        if not success:
+            return jsonify({"status": "error", "ticker": ticker_input, "analysis_text": "\n".join(log)}), 404
+
+        return jsonify({
+            "status": "success",
+            "ticker": ticker_input,
+            "analysis_text": "\n".join(log),
+            "structured_data": data
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": f"Internal server error: {e}"}), 500
+
+
 # Endpoint untuk mengetes apakah server jalan
 @app.route('/', methods=['GET'])
 def home():
