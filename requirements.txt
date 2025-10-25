@@ -1,7 +1,9 @@
 Flask
 yfinance
 pandas
-pandas-ta
+ta-lib
 numpy
 mplfinance
 gunicorn
+requests 
+beautifulsoup4
